@@ -87,3 +87,7 @@ const displayMovements = function(movements){
 }
 
 displayMovements(account1.movements);
+
+const user = 'Steven Thomas Williams'; //i need stw abbrevation
+const username = user.toLowerCase().split(' ');
+console.log(username)
