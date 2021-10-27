@@ -68,7 +68,7 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 const displayMovements = function(movements){
 
-  movements.forEach(function(mov, i){ //mov is movement
+  movements.forEach(function(mov, i){ // mov is movement
       const type = mov > 0 ? 'deposit':'withdrawal'; 
 
       const html = `
@@ -76,7 +76,10 @@ const displayMovements = function(movements){
           <div class="movements__type movements__type--${type}">${i+1}</div>
           <div class="movements__value">${mov}</div>
       </div>
-      `
+      `;
+
+      // insertAdjacentHTML - create a row in parent element
+      containerMovements.insertAdjacentHTML('afterbegin',html)
     })
     // end of forEach
 }
