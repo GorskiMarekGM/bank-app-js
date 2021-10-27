@@ -89,11 +89,14 @@ const displayMovements = function(movements){
 displayMovements(account1.movements);
 
 const user = 'Steven Thomas Williams'; //i need stw abbrevation
-const username = user
-.toLowerCase()
-.split(' ')
-.map(name => name[0])
-.join(''); //join letters without any seperator
 
-
-console.log(username)
+const createUserNames = function(username){
+  const username = user
+  .toLowerCase()
+  .split(' ')
+  .map(name => name[0])
+  .join(''); //join letters without any seperator
+  
+  // console.log(username)
+  return username
+}
