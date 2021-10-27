@@ -68,11 +68,15 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 const displayMovements = function(movements){
 
-  const html = `
-  <div class="movements__row">
-      <div class="movements__type movements__type--deposit">2 deposit</div>
-      <div class="movements__date">3 days ago</div>
-      <div class="movements__value">4 000€</div>
-  </div>
-  `
+  movements.forEach(function(mov, i){ //mov is movement
+      const type = mov > 0 ? 'deposit':'withdrawal'; 
+
+      const html = `
+      <div class="movements__row">
+          <div class="movements__type movements__type--${type}">${i+1}</div>
+          <div class="movements__value">${mov}</div>
+      </div>
+      `
+    })
+    // end of forEach
 }
