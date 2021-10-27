@@ -67,6 +67,8 @@ const inputClosePin = document.querySelector('.form__input--pin');
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 const displayMovements = function(movements){
+  // delete previous movements before we query next ones
+  containerMovements.innerHTML = '';
 
   movements.forEach(function(mov, i){ // mov is movement
       const type = mov > 0 ? 'deposit':'withdrawal'; 
