@@ -125,7 +125,7 @@ console.log(deposits)
 console.log(withdrawals)
 
 // REDUCE
-// add - accumulator - snowball
+// acc - accumulator - snowball
 // cur - current, i - index
 
 // const balance = movements.reduce(function (acc,cur, i, arr){
@@ -158,6 +158,17 @@ const clacDisplaySummary = function(movements){
   .reduce((acc,mov) => acc+mov,0);
 
   labelSumOut.textContent = `${outcomes} PLN`
+
+  // 1.2% of deposit
+  // const interest = incomes * 0.012
+
+  const interest = movements
+  .filter(mov => mov > 0)
+  .map(deposit => (deposit * 1.2)/100)
+  .reduce((acc,inter) => acc + inter,0);
+
+  labelSumInterest.textContent = `${interest} PLN`
+
 }
 
 clacDisplaySummary(account1.movements)
