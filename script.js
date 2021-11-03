@@ -94,6 +94,7 @@ const createUserNames = function (arr_with_accounts) {
 
   arr_with_accounts.forEach(function(one_account){
 
+    // we create new field 'username'
     one_account.username = one_account.owner
     .toLowerCase()
     .split(' ')
@@ -106,3 +107,11 @@ const createUserNames = function (arr_with_accounts) {
 };
 createUserNames(accounts)
 console.log(accounts);
+
+
+const deposits = movements.filter(function(mov){
+  return mov > 0;
+});
+
+console.log(movements)
+console.log(deposits)
