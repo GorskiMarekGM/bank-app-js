@@ -167,8 +167,8 @@ const clacDisplaySummary = function(movements){
   .map(deposit => (deposit * 1.2)/100)
   .reduce((acc,inter) => acc + inter,0);
 
-  labelSumInterest.textContent = `${interest} PLN`
+  labelSumInterest.textContent = `${parseFloat(interest).toFixed(2)} PLN`
 
 }
 
-clacDisplaySummary(account1.movements)
+clacDisplaySummary(account4.movements)
