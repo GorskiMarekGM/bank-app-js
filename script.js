@@ -90,15 +90,19 @@ displayMovements(account1.movements);
 
 const user = 'Steven Thomas Williams'; //i need stw abbrevation
 
-const createUserNames = function (user) {
-  const username = user
+const createUserNames = function (arr_with_accounts) {
+
+  arr_with_accounts.forEach(function(one_account){
+
+    one_account.username = one_account.owner
     .toLowerCase()
     .split(' ')
     .map(name => name[0])
     .join(''); //join letters without any seperator
 
   // console.log(username)
-  return username;
+  // return username;
+  })
 };
-
-console.log(createUserNames('Steven Thomas Williams'));
+createUserNames(accounts)
+console.log(accounts);
