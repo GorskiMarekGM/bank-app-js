@@ -109,9 +109,48 @@ createUserNames(accounts)
 console.log(accounts);
 
 
-const deposits = movements.filter(function(mov){
-  return mov > 0;
-});
+// const deposits = movements.filter(function(mov){
+//   return mov > 0;
+// });
 
+// modern way with arrow function
+const deposits = movements.filter(mov => mov > 0);
+const withdrawals = movements.filter(mov => mov < 0);
+
+
+console.log('--movements---')
 console.log(movements)
+console.log('------------')
 console.log(deposits)
+console.log(withdrawals)
+
+// REDUCE
+// add - accumulator - snowball
+// cur - current, i - index
+
+// const balance = movements.reduce(function (acc,cur, i, arr){
+//   console.log(`Iteration ${i}: ${acc}`)
+//   return acc +cur;
+// }, 0)
+
+// modern way
+const balance = movements.reduce((acc,cur) => acc+cur,0);
+
+console.log(balance)
+
+const calcDisplayBalance = function(movements){
+  const balance2 = movements.reduce((acc,mov) => acc+mov,0);
+
+  labelBalance.textContent = `${balance2} PLN`
+} 
+calcDisplayBalance(account1.movements)
+
+
+const clacDisplaySummary = function(movements){
+  const incomes = movements
+  .filter(mov => mov > 0)
+  .reduce((acc,mov) => acc+mov,0);
+
+  labelSumIn.textContent = `${incomes} PLN`
+}
+clacDisplaySummary(account1.movements)
