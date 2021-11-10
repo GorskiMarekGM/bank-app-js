@@ -143,8 +143,6 @@ const calcDisplayBalance = function(movements){
 
   labelBalance.textContent = `${balance2} PLN`
 } 
-calcDisplayBalance(account1.movements)
-
 
 const clacDisplaySummary = function(movements){
   const incomes = movements
@@ -171,13 +169,40 @@ const clacDisplaySummary = function(movements){
 
 }
 
-clacDisplaySummary(account3.movements)
 
-btnTransfer.addEventListener('click', function(e){
+let currentAcount;
+btnLogin.addEventListener('click',function(e){
+  // prevent form from permiting (default behavior of web browser)
   e.preventDefault();
-  const amount = Number(inputTransferAmount.value);
-  const recieverAcc = accounts.find(
-    acc => acc.username === inputTransferTo.value
-  );
-  console.log(amount, recieverAcc)
-});
+  currentAcount = accounts.find(acc => acc.username === inputLoginUsername.value)
+
+  console.log(currentAcount)
+  // ? - checks if current account exists 
+  if(currentAcount?.pin === Number(inputLoginPin.value)){
+    console.log('LOGIN OK')
+
+    // display UI and welcome message
+    labelWelcome.textContent = `Welcome back ${currentAcount.owner.split(' ')[0]}`
+    containerApp.style.opacity = 100
+
+    // display movements
+    clacDisplaySummary(currentAcount.movements)
+    calcDisplayBalance(currentAcount.movements)
+    
+    // display balance
+
+  }
+})
+
+
+// btnTransfer.addEventListener('click', function(e){
+//   e.preventDefault();
+//   const amount = Number(inputTransferAmount.value);
+//   const recieverAcc = accounts.find(
+//     acc => acc.username === inputTransferTo.value
+//   );
+//   console.log(amount, recieverAcc)
+//   if(amount > 0 &&
+//      currentAcount.balance >= amount
+//      )
+// });
