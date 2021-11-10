@@ -171,4 +171,13 @@ const clacDisplaySummary = function(movements){
 
 }
 
-clacDisplaySummary(account4.movements)
+clacDisplaySummary(account3.movements)
+
+btnTransfer.addEventListener('click', function(e){
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const recieverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+  console.log(amount, recieverAcc)
+});
