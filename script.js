@@ -142,14 +142,14 @@ const calcDisplayBalance = function(movements){
   labelBalance.textContent = `${balance2} PLN`
 } 
 
-const clacDisplaySummary = function(movements){
-  const incomes = movements
+const clacDisplaySummary = function(acc){
+  const incomes = acc.movements
   .filter(mov => mov > 0)
   .reduce((acc,mov) => acc+mov,0);
 
   labelSumIn.textContent = `${incomes} PLN`
 
-  const outcomes = movements
+  const outcomes = acc.movements
   .filter(mov => mov < 0)
   .reduce((acc,mov) => acc+mov,0);
 
@@ -158,9 +158,9 @@ const clacDisplaySummary = function(movements){
   // 1.2% of deposit
   // const interest = incomes * 0.012
 
-  const interest = movements
+  const interest = acc.movements
   .filter(mov => mov > 0)
-  .map(deposit => (deposit * 1.2)/100)
+  .map(deposit => (deposit * acc.interestRate)/100)
   .reduce((acc,inter) => acc + inter,0);
 
   labelSumInterest.textContent = `${parseFloat(interest).toFixed(2)} PLN`
@@ -190,7 +190,7 @@ btnLogin.addEventListener('click',function(e){
     calcDisplayBalance(currentAcount.movements);
 
     // display summary
-    clacDisplaySummary(currentAcount.movements);
+    clacDisplaySummary(currentAcount);
 
     // clear input
     inputLoginUsername.value = ''
