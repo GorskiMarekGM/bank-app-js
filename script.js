@@ -192,6 +192,10 @@ btnLogin.addEventListener('click',function(e){
     // display summary
     clacDisplaySummary(currentAcount.movements);
 
+    // clear input
+    inputLoginUsername.value = ''
+    inputLoginPin.value = ''
+
   }
 })
 
