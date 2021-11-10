@@ -86,8 +86,6 @@ const displayMovements = function(movements){
     // end of forEach
 }
 
-displayMovements(account1.movements);
-
 const user = 'Steven Thomas Williams'; //i need stw abbrevation
 
 const createUserNames = function (arr_with_accounts) {
@@ -186,10 +184,13 @@ btnLogin.addEventListener('click',function(e){
     containerApp.style.opacity = 100
 
     // display movements
-    clacDisplaySummary(currentAcount.movements)
-    calcDisplayBalance(currentAcount.movements)
+    displayMovements(currentAcount.movements);
     
     // display balance
+    calcDisplayBalance(currentAcount.movements);
+
+    // display summary
+    clacDisplaySummary(currentAcount.movements);
 
   }
 })
