@@ -203,6 +203,8 @@ btnTransfer.addEventListener('click', function(e){
     acc => acc.username === inputTransferTo.value
   );
   console.log(amount, recieverAcc)
+  inputTransferAmount.value = inputTransferTo.value = ''
+
   if(amount > 0 && 
     recieverAcc && //if obj exists
      currentAcount.balance >= amount &&
@@ -213,5 +215,30 @@ btnTransfer.addEventListener('click', function(e){
       //  doing the transfer
       currentAcount.movements.push(-amount)
       recieverAcc.movements.push(amount)
+      updateUI(currentAcount)
      }
 });
+
+btnClose.addEventListener('click',function(e){
+  e.preventDefault()
+  
+  if(inputCloseUsername.value === currentAcount.username &&
+    Number(inputClosePin.value) === currentAcount.pin){
+
+      //1. find index
+      const index = accounts.findIndex( acc => acc.username === currentAcount.username)
+      console.log(index)
+      //2. delete account
+      accounts.splice(index,1)
+      // hide UI
+      containerApp.style.opacity = 0
+    }
+    inputClosePin.value = inputCloseUsername.value = ''
+})
+
+// todo - HOMEWORK
+// timer at the end
+// logging out
+
+// highlight propper date
+// date of transaction
