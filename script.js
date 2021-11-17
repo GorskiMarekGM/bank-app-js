@@ -211,6 +211,7 @@ btnTransfer.addEventListener('click', function(e){
        console.log('transfer valid')
 
       //  doing the transfer
+      currentAcount.movements.push(-amount)
       recieverAcc.movements.push(amount)
      }
 });
