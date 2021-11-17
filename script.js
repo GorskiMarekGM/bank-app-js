@@ -106,7 +106,11 @@ const createUserNames = function (arr_with_accounts) {
 createUserNames(accounts)
 console.log(accounts);
 
-
+const updateUI = function(acc){
+  displayMovements(acc.movements)
+  calcDisplayBalance(acc)
+  clacDisplaySummary(acc)
+}
 // const deposits = movements.filter(function(mov){
 //   return mov > 0;
 // });
@@ -136,10 +140,10 @@ const balance = movements.reduce((acc,cur) => acc+cur,0);
 
 console.log(balance)
 
-const calcDisplayBalance = function(movements){
-  const balance2 = movements.reduce((acc,mov) => acc+mov,0);
+const calcDisplayBalance = function(acc){
+  acc.balance = acc.movements.reduce((acc,mov) => acc+mov,0);
 
-  labelBalance.textContent = `${balance2} PLN`
+  labelBalance.textContent = `${acc.balance} PLN`
 } 
 
 const clacDisplaySummary = function(acc){
@@ -183,15 +187,8 @@ btnLogin.addEventListener('click',function(e){
     labelWelcome.textContent = `Welcome back ${currentAcount.owner.split(' ')[0]}`
     containerApp.style.opacity = 100
 
-    // display movements
-    displayMovements(currentAcount.movements);
+    updateUI(currentAcount)
     
-    // display balance
-    calcDisplayBalance(currentAcount.movements);
-
-    // display summary
-    clacDisplaySummary(currentAcount);
-
     // clear input
     inputLoginUsername.value = ''
     inputLoginPin.value = ''
@@ -199,15 +196,21 @@ btnLogin.addEventListener('click',function(e){
   }
 })
 
+btnTransfer.addEventListener('click', function(e){
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const recieverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+  console.log(amount, recieverAcc)
+  if(amount > 0 && 
+    recieverAcc && //if obj exists
+     currentAcount.balance >= amount &&
+     recieverAcc.username !== currentAcount.username
+     ){
+       console.log('transfer valid')
 
-// btnTransfer.addEventListener('click', function(e){
-//   e.preventDefault();
-//   const amount = Number(inputTransferAmount.value);
-//   const recieverAcc = accounts.find(
-//     acc => acc.username === inputTransferTo.value
-//   );
-//   console.log(amount, recieverAcc)
-//   if(amount > 0 &&
-//      currentAcount.balance >= amount
-//      )
-// });
+      //  doing the transfer
+      recieverAcc.movements.push(amount)
+     }
+});
