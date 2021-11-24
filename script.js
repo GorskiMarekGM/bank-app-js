@@ -304,7 +304,7 @@ btnSort.addEventListener('click',function(e){
   e.preventDefault()
 
   console.log('movenents',currentAcount.movements.sort())
-  currentAcount.movements.sort()
+  currentAcount.movements.sort(function(a,b){return a - b})
   updateUI(currentAcount)
 
 })
