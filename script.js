@@ -8,6 +8,7 @@
 const account1 = {
   owner: 'Jonas Schmedtmann',
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+  dates: ['2/4/2020', '22/4/2020', '26/4/2020', '2/5/2020', '12/6/2020', '23/7/2020', '22/8/2020', '2/9/2020'],
   interestRate: 1.2, // %
   pin: 1111,
 };
@@ -15,6 +16,7 @@ const account1 = {
 const account2 = {
   owner: 'Jessica Davis',
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
+  dates: ['2/4/2020', '22/4/2020', '26/4/2020', '2/5/2020', '12/6/2020', '23/7/2020', '22/8/2020', '2/9/2020'],
   interestRate: 1.5,
   pin: 2222,
 };
@@ -22,6 +24,7 @@ const account2 = {
 const account3 = {
   owner: 'Steven Thomas Williams',
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
+  dates: ['11/2/2020', '13/5/2021', '26/4/2021', '7/8/2021', '23/9/2021', '1/2/2019', '3/2/2010', '4/4/2019'],
   interestRate: 0.7,
   pin: 3333,
 };
@@ -29,6 +32,7 @@ const account3 = {
 const account4 = {
   owner: 'Sarah Smith',
   movements: [430, 1000, 700, 50, 90],
+  dates: ['1/2/2000', '20/4/2000', '21/6/2001', '6/4/2002', '12/6/2002'],
   interestRate: 1,
   pin: 4444,
 };
@@ -66,16 +70,17 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-const displayMovements = function(movements){
+const displayMovements = function(acc){
   // delete previous movements before we query next ones
   containerMovements.innerHTML = '';
 
-  movements.forEach(function(mov, i){ // mov is movement
+  acc.movements.forEach(function(mov, i){ // mov is movement
       const type = mov > 0 ? 'deposit':'withdrawal'; 
 
       const html = `
       <div class="movements__row">
           <div class="movements__type movements__type--${type}">${i+1} ${type}</div>
+          <div class="movements__date" id="${i}"></div>
           <div class="movements__value">${mov}</div>
       </div>
       `;
@@ -84,6 +89,10 @@ const displayMovements = function(movements){
       containerMovements.insertAdjacentHTML('afterbegin',html)
     })
     // end of forEach
+
+    acc.dates.forEach(function(d, i){
+      document.getElementById(i).textContent = d
+    })
 }
 
 const user = 'Steven Thomas Williams'; //i need stw abbrevation
@@ -107,7 +116,7 @@ createUserNames(accounts)
 console.log(accounts);
 
 const updateUI = function(acc){
-  displayMovements(acc.movements)
+  displayMovements(acc)
   calcDisplayBalance(acc)
   clacDisplaySummary(acc)
 }
@@ -188,11 +197,12 @@ btnLogin.addEventListener('click',function(e){
     containerApp.style.opacity = 100
 
     updateUI(currentAcount)
-    
+
     // clear input
     inputLoginUsername.value = ''
     inputLoginPin.value = ''
 
+    startTimer()
   }
 })
 
@@ -215,6 +225,8 @@ btnTransfer.addEventListener('click', function(e){
       //  doing the transfer
       currentAcount.movements.push(-amount)
       recieverAcc.movements.push(amount)
+      currentAcount.dates.push(getDate())
+      recieverAcc.dates.push(getDate())
       updateUI(currentAcount)
      }
 });
@@ -242,6 +254,7 @@ btnLoan.addEventListener('click',function(e){
   if(amount > 0 &&
     currentAcount.movements.some( mov => mov >= amount * 0.1)){
       currentAcount.movements.push(amount)
+      currentAcount.dates.push(getDate())
       updateUI(currentAcount)
   }
 })
@@ -251,4 +264,47 @@ btnLoan.addEventListener('click',function(e){
 // logging out
 
 // highlight propper date
-// date of transaction
+// dates for every transaction
+// btn sort from high/low one time sort (original order)
+
+const getDate = function(){
+  var dateObj = new Date();
+  var month = dateObj.getUTCMonth() + 1; //months from 1-12
+  var day = dateObj.getUTCDate();
+  var year = dateObj.getUTCFullYear();
+
+  let newdate = day + "/" + month + "/" + year;
+  console.log(newdate)
+  return newdate
+}
+labelDate.textContent = getDate()
+
+function startTimer() {
+  var timer = 300;
+  setInterval(function () {
+      //getting minutes and seconds
+      var minutes = parseInt(timer / 60, 10);
+      var seconds = parseInt(timer % 60, 10);
+
+      //adding 0 when single digit
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      labelTimer.textContent = minutes + ":" + seconds;
+
+      //logging out when time 0
+      if (--timer < 0) {
+          containerApp.style.opacity = 0;
+      }
+  }, 1000);
+}
+
+// Btn sort
+btnSort.addEventListener('click',function(e){
+  e.preventDefault()
+
+  console.log('movenents',currentAcount.movements.sort())
+  currentAcount.movements.sort()
+  updateUI(currentAcount)
+
+})
